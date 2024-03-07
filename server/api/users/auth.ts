@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
         token,
       };
     } catch (error) {
+      setResponseStatus(event, 403);
       return {
         errors: ["Token Invalido"],
       };
