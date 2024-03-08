@@ -10,6 +10,16 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data
+    networks:
+      postgres-network:
+        ipv4_address: 172.16.0.10  # IP fixo para o container PostgreSQL
+
+networks:
+  postgres-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
 
 volumes:
   db-data:
