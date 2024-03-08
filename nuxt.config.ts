@@ -4,4 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: process.env.SECRET_KEY,
   },
+  modules: [
+    '@pinia/nuxt',
+  ]
 });

@@ -26,3 +26,16 @@ export async function handleAuthorization(token: string) {
     };
   }
 }
+
+export const managerToken = {
+  storageKey: "access_token",
+  set(token: string) {
+    localStorage.setItem(this.storageKey, token);
+  },
+  get() {
+    return localStorage.getItem(this.storageKey);
+  },
+  clear() {
+    localStorage.removeItem(this.storageKey);
+  },
+};
