@@ -11,11 +11,19 @@ export const managerUser = {
     return handleAuthorization(token);
   },
   async login(credentials: { email: string; password: string }) {
-    $fetch("/api/users/login", {
+    return $fetch("/api/users/login", {
       method: "POST",
       body: {
         email: credentials.email,
         password: credentials.password,
+      },
+    });
+  },
+  async me(token: string) {
+    return $fetch("/api/users/me", {
+      method: "POST",
+      body: {
+        authorization: token,
       },
     });
   },
@@ -37,15 +45,19 @@ export const managerProduct = {
       },
     });
   },
-  async deleteUniqueProduct(token: string, id: string){
-    return $fetch('/api/products/delete/' + id,{
+  async deleteUniqueProduct(token: string, id: string) {
+    return $fetch("/api/products/delete/" + id, {
       method: "DELETE",
       body: {
-        authorization: token
-      }
-    })
+        authorization: token,
+      },
+    });
   },
-  async updateProduct(token: string, productOptions: ProductOptions, id: string) {
+  async updateProduct(
+    token: string,
+    productOptions: ProductOptions,
+    id: string
+  ) {
     return $fetch("/api/products/update/" + id, {
       method: "PUT",
       body: {
