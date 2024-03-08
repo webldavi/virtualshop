@@ -26,6 +26,6 @@ export default defineEventHandler(async (event) => {
         name: true
       }
     })
-    console.log(user)
+    return user
   }
 });
