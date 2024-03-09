@@ -29,11 +29,19 @@
 <script setup>
 import InputGroup from "primevue/inputgroup";
 import InputGroupAddon from "primevue/inputgroupaddon";
-import Checkbox from 'primevue/checkbox';
 import Panel from "primevue/panel";
 import Button from 'primevue/button';
 import Password from 'primevue/password';
 import Message from 'primevue/message';
+
+definePageMeta({
+  middleware: async ()=>{
+    if(process.client){
+      const response = await managerUser.auth(`token ${managerToken.get()}`)
+      return response.authorization ? navigateTo('/dashboard') : true
+    }
+  }
+})
 
 import { managerUser } from "~/services/api/index";
 

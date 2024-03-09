@@ -8,23 +8,16 @@ export function hasAllRequiredFields(
 }
 
 export async function handleAuthorization(token: string) {
-  const authResponse = await $fetch("/api/users/auth", {
+  const authResponse = await useFetch("/api/users/auth", {
     method: "POST",
     body: {
       authorization: token,
     },
   });
-  if ("errors" in authResponse) {
-    return {
-      authorization: false,
-      authResponse,
-    };
-  } else {
-    return {
-      authorization: true,
-      authResponse,
-    };
-  }
+  return {
+    authorization: authResponse.error.value ? false : true,
+    authResponse,
+  };
 }
 
 export const managerToken = {
@@ -33,7 +26,7 @@ export const managerToken = {
     localStorage.setItem(this.storageKey, token);
   },
   get() {
-    return localStorage.getItem(this.storageKey);
+    return localStorage.getItem(this.storageKey) || '';
   },
   clear() {
     localStorage.removeItem(this.storageKey);
