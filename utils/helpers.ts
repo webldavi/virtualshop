@@ -1,3 +1,4 @@
+
 export function hasAllRequiredFields(
   obj: { [key: string]: any },
   fields: Array<string>
@@ -8,14 +9,14 @@ export function hasAllRequiredFields(
 }
 
 export async function handleAuthorization(token: string) {
-  const authResponse = await useFetch("/api/users/auth", {
+  const authResponse = await $fetch("/api/users/auth", {
     method: "POST",
     body: {
       authorization: token,
     },
   });
   return {
-    authorization: authResponse.error.value ? false : true,
+    authorization: !Object.keys(authResponse).includes('errors'),
     authResponse,
   };
 }
@@ -32,3 +33,22 @@ export const managerToken = {
     localStorage.removeItem(this.storageKey);
   },
 };
+
+
+export function priceFormat(price: string | number){
+  return Number(price).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+}
+
+export function convertToBase64(file: any, callback: (base64: string)=> any) {
+  const reader:any = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = function () {
+    const base64String = reader.result.split(',')[1];
+    callback(base64String);
+  };
+
+  reader.onerror = function (error: string) {
+    console.error('Error converting file to base64:', error);
+  };
+}

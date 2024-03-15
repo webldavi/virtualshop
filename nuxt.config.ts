@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
   },
   css: [
-    "primevue/resources/themes/aura-light-blue/theme.css",
+    "primevue/resources/themes/aura-light-amber/theme.css",
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],

@@ -11,59 +11,71 @@ export const managerUser = {
     return handleAuthorization(token);
   },
   async login(credentials: { email: string; password: string }) {
-    return $fetch("/api/users/login", {
+    const response = await useFetch("/api/users/login", {
       method: "POST",
       body: {
         email: credentials.email,
         password: credentials.password,
       },
     });
+    return response.data.value
   },
   async me(token: string) {
-    return $fetch("/api/users/me", {
+    const response = await useFetch("/api/users/me", {
       method: "POST",
       body: {
         authorization: token,
       },
     });
+    return response.data.value
   },
+  logout(){
+    managerToken.clear()
+    navigateTo('/login')
+  }
 };
 
 export const managerProduct = {
   async getAllProducts() {
-    return $fetch("/api/products");
+    const response = await useFetch("/api/products")
+    return response.data.value
+    
   },
   async getUniqueProduct(id: string) {
-    return $fetch("/api/products/" + id);
+    const response = await useFetch("/api/products/" + id);
+    return response.data.value
   },
   async createProduct(token: string, productOptions: ProductOptions) {
-    return $fetch("/api/products/create", {
+    const response = await useFetch("/api/products/create", {
       method: "POST",
       body: {
         authorization: token,
         product: productOptions,
       },
     });
+    return response.data.value
   },
   async deleteUniqueProduct(token: string, id: string) {
-    return $fetch("/api/products/delete/" + id, {
+    const response = await useFetch("/api/products/delete/" + id, {
       method: "DELETE",
       body: {
         authorization: token,
       },
     });
+    return response.data.value
   },
   async updateProduct(
     token: string,
     productOptions: ProductOptions,
     id: string
   ) {
-    return $fetch("/api/products/update/" + id, {
+    const response = await useFetch("/api/products/update/" + id, {
       method: "PUT",
       body: {
         authorization: token,
         product: productOptions,
       },
     });
+    return response.data.value
   },
 };

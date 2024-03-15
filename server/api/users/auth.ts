@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   if (event.method == "POST") {
     const { authorization } = await readBody(event);
     if (!authorization) {
-      setResponseStatus(event, 403);
       return {
         errors: ["Token não fornecido"],
       };
@@ -19,7 +18,6 @@ export default defineEventHandler(async (event) => {
         token,
       };
     } catch (error) {
-      setResponseStatus(event, 403);
       return {
         errors: ["Token Invalido"],
       };

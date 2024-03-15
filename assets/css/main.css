@@ -1,3 +1,35 @@
 /* @tailwind base;
 @tailwind components; */
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
+body {
+  @apply m-0 p-0;
+  background-color: #fbfbfb;
+}
+
+* {
+  transition: all 200ms;
+  font-family: "Roboto Serif", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100,
+    "GRAD" 0;
+}
+
+.space-x-2 {
+  @apply flex flex-row gap-2 items-center;
+}
+
+.p-dialog-content {
+  flex: 1;
+}
+
+.limited-description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

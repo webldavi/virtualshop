@@ -4,7 +4,10 @@ import { managerToken } from "~/utils/helpers";
 
 export const useUserStore = defineStore('user', {
   state: ()=>({
-    me: {}
+    me: {
+      name: '',
+      email: '',
+    }
   }),
   actions: {
     async getMe(){
@@ -12,6 +15,10 @@ export const useUserStore = defineStore('user', {
       managerUser.me(`token ${token}`).then(async response=>{
         this.setMe(response)
       })
+    },
+    logout(){
+      managerToken.clear()
+      navigateTo('/login')
     },
     setMe(value: any){
       this.me = value

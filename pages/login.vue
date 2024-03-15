@@ -86,7 +86,4 @@ async function submit(){
 .formSection{
   @apply flex flex-col gap-2 my-2 mb-8
 }
-.space-x-2{
-  @apply flex flex-row gap-2 items-center my-4
-}
 </style>
