@@ -3,6 +3,18 @@ import jwt from "jsonwebtoken";
 import { useFetch } from "nuxt/app";
 import { handleAuthorization, hasAllRequiredFields } from "~/utils/helpers";
 
+type Body = {
+  authorization: string;
+  product: {
+    name: string;
+    imageUrl: string;
+    description: string;
+    price: number;
+    stock: number;
+    categoryId: string;
+  };
+};
+
 export default defineEventHandler(async (event) => {
   if (event.method == "POST") {
     const body = await readBody(event);
@@ -12,6 +24,7 @@ export default defineEventHandler(async (event) => {
       "description",
       "price",
       "stock",
+      "categoryId", // Adicionando categoryId como campo obrigatório
     ];
 
     if (!body) {
@@ -20,10 +33,10 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const { authorization, product } = body;
+    const { authorization, product } : Body = body;
     if (!authorization) {
       return {
-        errors: ["O campo `authorization` é obigatório"],
+        errors: ["O campo `authorization` é obrigatório"],
       };
     }
     const { authorization: auth, authResponse } = await handleAuthorization(
@@ -33,6 +46,7 @@ export default defineEventHandler(async (event) => {
     if (!auth) {
       return authResponse;
     }
+
     // check if product is not empty
     if (!product) {
       return {
@@ -49,8 +63,27 @@ export default defineEventHandler(async (event) => {
       };
     }
 
+    // Aqui você deve ter o categoryId da categoria desejada
+    const category = await prisma.category.findUnique({
+      where: {
+        id: product.categoryId,
+      },
+    });
+
+    if(!category){
+      return {
+        errors: [
+          'Categoria não existente'
+        ]
+      }
+    }
+    const productWithCategory = {
+      ...product,
+      categoryId: category.id, // Incluindo categoryId no objeto product
+    };
+
     const productCreated = await prisma.product.create({
-      data: product,
+      data: productWithCategory,
     });
 
     return productCreated;

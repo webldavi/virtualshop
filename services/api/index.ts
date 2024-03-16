@@ -1,3 +1,5 @@
+import { handleAuthorization } from "../../utils/helpers";
+
 interface ProductOptions {
   name: string;
   imageUrl: string;
